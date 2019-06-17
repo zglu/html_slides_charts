@@ -1,0 +1,1254 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>S. mansoni V7 genome annotation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="asserts/reveal.css" />
+  <link rel="stylesheet" href="asserts/reveal-simple.css" />
+  <!-- always use cdn url with https -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+<!-- for complicated charts -->
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+<!-- show chart in 3D -->
+  <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<!-- theme -->
+  <script src="asserts/highcharts-grid-light.js"></script>
+<!-- drilldown function -->
+  <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<!-- use csv and json function -->
+  <script src="https://code.highcharts.com/modules/data.js"></script>
+<!-- show exporting options on the top right corner -->
+<!--  <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h2> <em>S. mansoni</em> V7 genome annotation and identifier transfer</h2>
+	    <h4>Updates</h4>
+        <h5>
+        <a href="mailto:Zhigang.Lu@sanger.ac.uk?subject=Sm v7 annotation">Zhigang Lu</a><br>
+	    07/2017
+	    </h5>
+      </section>
+
+      <section>
+	    <h3> Pipeline Overview</h3>
+          <img src="asserts/transfer_scheme.jpg" width="82%" style="border: none;"/>
+      </section>
+
+      <section>
+          <h2>Genome Annotation</h2>
+          <h4>RATT annotation transfer + Augustus gene prediction</h4>
+      </section>
+
+      <section>
+            <h3>RATT transfer from V5.2 to V7</h3>
+          <p>In total 11029 gene models to be transferred. RATT run with <strong>unmasked</strong> genome.</p>
+            <h5 style="text-align: left;">Different settings of RATT were tested</h5>
+            <table style="background-color: #eee; width: 80%;">
+                <tr>
+                    <th></th>
+                    <th>Pacbio</th>
+                    <th>Species</th>
+                    <th>Assembly</th>
+                    <th>Strain</th>
+                </tr>
+                <tr>
+                    <td>Transferred correctly</td>
+                    <td>10164</td>
+                    <td>10494</td>
+                    <td>9466</td>
+                    <td>10152</td>
+                </tr>
+                <tr>
+                    <td>Partially Transferred</td>
+                    <td>354</td>
+                    <td>293</td>
+                    <td>736</td>
+                    <td>468</td>
+                </tr>
+                <tr>
+                    <td>Not transferred</td>
+                    <td>511</td>
+                    <td>242</td>
+                    <td>827</td>
+                    <td>409</td>
+                </tr>
+            </table><br>
+            <h5 class="fragment fade-up" style="text-align: left;">When taking structurally-correct gene models (5040 in total)</h5>
+            <table class="fragment fade-up" style="background-color: #eee; width: 80%;">
+                <tr>
+                    <th></th>
+                    <th>Pacbio</th>
+                    <th>Species</th>
+                </tr>
+                <tr>
+                    <td>100% agree in AA sequences</td>
+                    <td>1995</td>
+                    <td>1574</td>
+                </tr>
+                <tr>
+                    <td>>95% agree in AA sequences</td>
+                    <td>4483</td>
+                    <td>4015</td>
+                </tr>
+            </table>
+            <br>
+            <p class="fragment fade-up" style="color: red;">==> Use the Pacbio setting (c = 800, l = 30, g = 2000)</p>
+      </section>
+
+      <section>
+            <h3>Gene finding using Augustus</h3>
+          <ul style="float: left;">
+              <li>RepeatMasker was used to <strong>mask</strong> low-complexity regions and transposons.</li>
+              <li>Prioritised Isoseq to 40 (RNAseq 4)</li>
+           <!--   <li style="background-color: #eee;"><em>Run: --species=schistosoma2 --UTR=1 --nc=0 --gff3=on --alternatives-from-evidence=1 --predictionStart=1 --predictionEnd=47057</em></small></li> -->
+          </ul><br>
+            <table style="background-color: #eee; margin-top: 20px;">
+                <tr>
+                    <th></th>
+                    <th>RNAseq only (all life stages)</th>
+                    <th>RNAseq (all) + Isoseq (♂+♀+Somule)</th>
+                    <th>RNAseq (all) + Isoseq (♂+♀+Somule+Sporo)</th>
+                </tr>
+                <tr>
+                    <td>No. transcripts</td>
+                    <td>10921</td>
+                    <td>15974</td>
+                    <td>16213</td>
+                </tr>
+                <tr>
+                    <td>No. genes</td>
+                    <td>9266</td>
+                    <td>10768</td>
+                    <td>10786</td>
+                </tr>
+                <tr>
+                    <td>No. Consensus to RATT</td>
+                    <td>8270 (75.7%)</td>
+                    <td>13877 (86.9%)</td>
+                    <td>14068 (86.8%)</td>
+                </tr>
+            </table>
+            <p style="color: red;">==> Use the 2nd set.</p>
+      </section>
+
+      <section>
+          <h3>Accuracy of Augustus models (to RATT)</h3>
+          <pre style="font-size: 0.65em; margin-top: 10px; background-color: #eee;">
+#= Summary for dataset: ../Aug_plusIsoseq_all.gff
+#     Query mRNAs :   15871 in   10412 loci  (15255 multi-exon transcripts)
+#            (3006 multi-transcript loci, ~1.5 transcripts per locus)
+# Reference mRNAs :    9512 in    8691 loci  (8588 multi-exon)
+# Super-loci w/ reference transcripts:     7950
+#-----------------| Sensitivity | Precision  |
+        Base level:    94.3     |    49.9    |
+        Exon level:    69.4     |    51.8    |
+      Intron level:    88.5     |    65.9    |
+Intron chain level:    19.1     |    10.7    |
+  Transcript level:    17.7     |    10.6    |
+       Locus level:    19.3     |    16.1    |
+
+     Matching intron chains:    1638
+       Matching transcripts:    1686
+              Matching loci:    1677
+
+          Missed exons:    1333/67495   (  2.0%)
+           Novel exons:   22887/90492   ( 25.3%)
+        Missed introns:    2183/58309   (  3.7%)
+         Novel introns:   17376/78297   ( 22.2%)
+           Missed loci:       0/8691    (  0.0%)
+            Novel loci:    1788/10412   ( 17.2%)
+
+ Total union super-loci across all input datasets: 9786
+          </pre>
+          <p style="float: right;"><small>Reported by <em><a href="http://ccb.jhu.edu/software/stringtie/gff.shtml" target="_blank">gffcompare</a>.</em></small></p>
+      </section>
+
+      <section>
+            <h3>Comparing Augustus to RATT in AA sequences </h3>
+            <center><div id="rabar" style="width: 70%; height: 100%;"></div></center>
+<script>
+$(function () {
+   var rabar = new Highcharts.Chart({
+     chart: {
+         renderTo: 'rabar',
+         type: 'column',
+         options3d: {
+             enabled: true
+         },
+         style: {
+             fontFamily: 'Arial'
+         }
+       },
+    xAxis: {
+        categories: ['RATT Pacbio', 'Augustus']
+    },
+    title: {
+        text: ''
+    },
+    subtitle: {
+        text: 'Green: "structurally-correct" models; Blue: all models'
+    },
+    yAxis: {
+        allowDecimals: false,
+        min: 0,
+        title: {
+            text: 'Number of transcripts'
+        },
+        labels: {
+            format: '{value}'
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.x + '</b><br/>' +
+                this.series.name + ': ' + this.y + '<br/>' +
+                'Total (>95%:) ' + this.point.stackTotal;
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal'
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: '100%',
+        data: [1995, 1454],
+        stack: 'Corrected',
+        color: 'lightgreen'
+    }, {
+        name: '95-100%',
+        data: [2488, 1885],
+        stack: 'Corrected',
+        color: 'green'
+    }, {
+        name: '100%',
+        data: [3872, 2239],
+        stack: 'All',
+        color: '#008899'
+    }, {
+        name: '95-100%',
+        data: [3783, 2763],
+        stack: 'All',
+        color: '#00515b'
+    }]
+  })
+});
+</script>
+   <p class="fragment fade-up" style="font-size: 0.9em;"><em>RATT is better than Augustus in sequence similarities (to V5). <br>
+       In many cases, Augustus set the translation start site at the 2nd or even 3rd ATG (middle got higher bonus), whereas in V5 always the 1st.<br>
+       Augustus has corrected many bad/unsolved gene models in V5, and it has the advantages in producing alternative transcripts and predicting UTRs.</em></p>
+        </section>
+
+      <section>
+          <h2>Identifier Transfer</h2>
+          <h4>From V5 + RATT-V7 to Augustus-V7 <br>based on coordinates + sequence similarities</h4>
+      </section>
+
+      <section>
+           <h3>Consensus transcripts between RATT & Augustus</h3>
+           <img src="asserts/ven-diag.jpg" width="98%" style="border: none;">
+      </section>
+
+      <section>
+          <div>
+              <div id="chart2" style="width: 47%; height: 100%; display: inline; float: left;"></div>
+              <div id="chart1" style="width: 53%; height: 100%; display: inline; float: left;"></div>
+          </div>
+<script>
+$(function () {
+    var chart2 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'chart2',
+            type: 'pie',
+            style: {
+                fontFamily: 'Arial'
+            },
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'V5.2 Transcript set'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 45,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}'
+                }
+            }
+        },
+        credits: {
+            enabled: false
+        },
+		series: [{
+		    name: 'V5.2 set',
+		    data: [{
+		        name: 'Consensus',
+		        y: 8270,
+		        sliced: true,
+		        color: '#d8a373'
+		    }, {
+		        name: 'No consensus',
+		        y: 2248,
+		        color: '#977250',
+		        drilldown: 'notconsensus'
+		    }, {
+		        name: 'Not transferred',
+		        y: 511,
+		        color: '#788286',
+		        drilldown: 'nottransferred'
+		    }]
+        }],
+        drilldown: {
+            series: [{
+                id: 'notconsensus',
+                data: [
+                    ['Isoform is cons', 842],
+                    ['> 90% to Aug', 354],
+                    ['Hypothetical', 803],
+                    ['The rest', 488]
+                ]
+             }, {
+                id: 'nottransferred',
+                data: [
+                    ['>90% to Aug',65],
+                    ['Struc. correct',49],
+                    ['Hypothetical', 299],
+                    ['Kinase',14],
+                    ['steroid dehydrogenase',7],
+                    ['Egg protein',7],
+                    ['MEG', 5],
+                    ['The rest', 114]
+                ]
+            }]
+        }
+    })
+});
+
+$(function () {
+    var chart1 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'chart1',
+            type: 'pie',
+            style: {
+                fontFamily: 'Arial'
+            },
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'Augustus transcript set'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 45,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}'
+                }
+            }
+        },
+        credits: {
+            enabled: false
+        },
+		series: [{
+		    name: 'Augustus set',
+		    data: [{
+		        name: '100% with RATT',
+		        y: 3244,
+		        color: '#329932'
+		    }, {
+		        name: '95% with RATT',
+		        y: 1722,
+		        color: '#66b266'
+		    }, {
+		        name: '90% with RATT',
+		        y: 904,
+		        color: '#99cc99'
+		    }, {
+		        name: 'The rest consensus',
+		        y: 7637,
+		        sliced: true,
+		        color: '#2e5a67',
+		        drilldown: 'rest consensus'
+		    }, {
+		        name: 'Potential novel',
+		        y: 2097,
+		        color: '#b2b2b2',
+		        drilldown: 'novel2097'
+		    }, {
+		        name: 'Delete',
+		        y: 26,
+		        color: 'black',
+		        drilldown: null
+		    }]
+        }],
+        drilldown: {
+            series: [{
+                id: 'rest consensus',
+                data: [
+                    ['TopHit = Consensus', 6630],
+                    ['1 RATT -> 2 Aug (split)', 567],
+                    ['1 Aug -> 2 RATT (merge)', 276],
+                    ['The rest', 164]
+                ]
+             }, {
+                 id: 'novel2097',
+                 data: [
+                     ['>90% to V5', 570],
+                     ['>90% to NoConsensus', 208],
+                     ['Novel', 1851]
+                 ]
+            }]
+        }
+    })
+});
+</script>
+      </section>
+
+      <section>
+         <h3>Identifier transfer</h3>
+
+          <ul>
+          <h5 style="margin-left: -40px; color: blue;">- Taking old identifiers</h5>
+              <li>AA sequence > 90% agree on length and similarity (RATT & Augustus)</li>
+              <li>< 90% agreement, but result in same ID from RATT consensus and Tophit alignment to V5</li>
+              <li>In the same coordinate range and similarity > 85%</li>
+              <li>Augustus AA sequence > 90% agree with V5</li>
+          <br>
+          <h5 style="margin-left: -40px; color: blue;">- Getting new identifiers (Starting from Smp_300010)</h5>
+              <li>Merge of gene models (manually checked)</li>
+              <li>Split of gene models (confirmed by bedtools & partially checked)</li>
+              <li>Same coordinate range but sequences similarity < 85% (add psid)</li>
+              <li>Multiple copies got new id each but refer to the same psid</li>
+              <li>Sequence alignment with no hit/bad hits to V5 genes (novel)</li>
+          </ul>
+      </section>
+
+      <section>
+          <h3>Resulting files</h3>
+          <span style="float:left;">- <a href="/nfs/users/nfs_z/zl3/Smansoni/V7/Sm_V7_r7.gff">GFF annotation</a> (can add psid and product info)</span><br>
+          <pre>
+##gff-version 3
+...
+SM_V7_1 AUGUSTUS        gene    7950782 7959785 0.43    +       .       ID=Smp_331700
+SM_V7_1 AUGUSTUS        transcript      7950782 7959785 0.43    +       .       ID=Smp_331700.1;Parent=Smp_331700;note=psid:...
+SM_V7_1 AUGUSTUS        transcription_start_site        7950782 7950782 .       +       .       Parent=Smp_331700.1
+SM_V7_1 AUGUSTUS        exon    7950782 7955185 .       +       .       Parent=Smp_331700.1
+SM_V7_1 AUGUSTUS        start_codon     7951148 7951150 .       +       0       Parent=Smp_331700.1
+SM_V7_1 AUGUSTUS        CDS     7951148 7955140 1       +       0       ID=Smp_331700.1.cds;Parent=Smp_331700.1
+SM_V7_1 AUGUSTUS        stop_codon      7955138 7955140 .       +       0       Parent=Smp_331700.1
+SM_V7_1 AUGUSTUS        exon    7958843 7959785 .       +       .       Parent=Smp_331700.1
+SM_V7_1 AUGUSTUS        transcription_end_site  7959785 7959785 .       +       .       Parent=Smp_331700.1
+...
+          </pre>
+          <span class="fragment fade-up" style="float:left">- <a href="/nfs/users/nfs_z/zl3/Smansoni/V7/transConfirmed21.txt">Tracking identifier changes</a></span><br>
+          <pre class="fragment fade-up">
+g10026  SM_V7_6 Smp_191970      aug_95%_chado
+g10027  SM_V7_6 Smp_059600      95%_ratt
+g10028  SM_V7_6 Smp_317500      NotChecked_Novel_BadHit
+g1003   SM_V7_1 Smp_140500      90%_tophit_consen
+g10030  SM_V7_6 Smp_141490      sameid_tophit_consen
+g1130   SM_V7_1 Smp_301460      SplitFrom:Smp_007290
+g1131   SM_V7_1 Smp_301470      SplitFrom:Smp_007290
+g1293   SM_V7_1 Smp_301660      MergeFrom:Smp_132630;Smp_201140
+g10286	SM_V7_7	Smp_334830      consensus_low_simarity:Smp_193630
+...
+          </pre>
+      </section>
+
+      <section>
+          <h3>Vignette - one to one transfer</h3>
+          <figure>
+              <img src="asserts/artemis/one_to_one.png" width="70%" style="border: none;"/>
+              <img src="asserts/artemis/augustus-extend.png" width="70%" style="border: none;"/>
+          </figure>
+      </section>
+
+      <section>
+          <h3>Correctly fused</h3>
+          <figure>
+              <img src="asserts/artemis/augustus-merge.png" height="80%" style="border: none;"/>
+          </figure>
+      </section>
+
+      <section>
+          <h3>Split: correct or incorrect</h3>
+          <figure>
+              <img src="asserts/artemis/aug_split_correct.png" width="50%" style="border: none;"/>
+              <img src="asserts/artemis/aug_split_wrong.png" width="50%" style="border: none;"/>
+          </figure>
+      </section>
+
+      <section>
+          <h3>Novel genes</h3>
+          <figure>
+              <img src="asserts/artemis/aug-novel.png" height="80%" style="border: none;"/>
+          </figure>
+      </section>
+
+      <section>
+          <h3>Models with errors</h3>
+          <figure>
+              <img src="asserts/artemis/fix-inframe-stop.png" height="80%" style="border: none;"/>
+          </figure>
+      </section>
+
+      <section>
+          <h3>"Structurally-correct" genes on Augustus set</h3>
+          <div id="corr-aug" style="width: 100%; height: 100%;"></div>
+<script>
+$(function () {
+    var chart3 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'corr-aug',
+            type: 'pie',
+            style: {
+                fontFamily: 'Arial'
+            },
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: 'Total number: 5019; 51 not transferred'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 55,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}'
+                }
+            }
+        },
+        series: [{
+            name: 'Struc-correct set',
+            data: [{
+                name: '> 95% similarity',
+                y: 3244,
+                color: '#339900',
+                drilldown: null
+              }, {
+                name: '> 85 similarity',
+                y: 1223,
+                color: '#66CC00',
+                drilldown: null
+              }, {
+                name: 'Merged',
+                y: 72,
+                color: '#990066',
+                drilldown: null
+              }, {
+                name: 'Split',
+                y: 334,
+                color: '#ff9966',
+                drilldown: null
+              }, {
+                name: 'Not Transferred / Not Predicted',
+                y: 126,
+                sliced: true,
+                color: '#333333',
+                drilldown: 'NoHomologue'
+            }]
+        }],
+        drilldown: {
+            series: [{
+                id: 'NoHomologue',
+                data: [
+                    ['Hypothetical', 34],
+                    ['MEG', 7],
+                    ['Undefined', 4],
+                    ['Gag/pol protein', 8],
+                    ['Venom allergen-like (VAL)', 3],
+                    ['Ribosomal protein', 4],
+                    ['Glutathione peroxidase', 2],
+                    ['Protocadherin', 2],
+                    ['Eukaryotic translation initiation factor',2],
+                    ['Protease',2],
+                    ['Sm23',1],
+                    ['SmKK7', 1],
+                    ['The rest', 56]
+                ]
+            }]
+        }
+    });
+});
+</script>
+      </section>
+
+      <section>
+          <section>
+              <h3>The new V7 gene set</h3>
+              <center><div id="chart4" style="width:100%; height: 100%;"></div> </center>
+<script>
+$(function () {
+    var chart4 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'chart4',
+            type: 'pie',
+            style: {
+                fontFamily: 'Arial'
+            },
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: 'Total genes: 10742'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 55,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}'
+                }
+            }
+        },
+        series: [{
+            name: 'V7 IDs',
+            colorByPoint: true,
+            data: [{
+                name: 'V5 IDs',
+                y: 7214,
+                drilldown: 'keep ids'
+              }, {
+                name: 'Smp_3: with V5 PSID',
+                y: 1969,
+                sliced: true,
+                drilldown: 'with psid'
+              }, {
+                name: 'Smp_3: novel genes',
+                y: 1559,
+                drilldown: 'novel'
+            }]
+        }],
+        drilldown: {
+            series: [{
+                id: 'keep ids',
+                data: [
+                    ['> 90% in sequence length and similarity', 5159],
+                    ['same Consensus and Tophit id (similarity > 85%)', 1609],
+                    ['> 90% agree with V5', 358],
+                    ['The rest consensus', 88]
+                ]
+            }, {
+                id: 'with psid',
+                data: [
+                    ['Split', 1311],
+                    ['Merge', 287],
+                    ['Multiple copies (chr + SC)', 141],
+                    ['Sequence similarity ＜ 85%', 230]
+                ]
+            }, {
+                id: 'novel',
+                data: [
+                    ['Hints for >=80% of the transcript', 972],
+                    ['Hints for 60-80% of the transcript', 348],
+                    ['Hints for 40-60% of the transcript', 154],
+                    ['Hints for 20-40% of the transcript', 87],
+                    ['＜ 20% of the transcript supported by hints', 33]
+                ]
+            }]
+        }
+    });
+});
+</script>
+          </section>
+          <section>
+              <h3>Changes in V5.2 set</h3>
+              <div id="chadochange" style="width: 100%;"></div>
+<script>
+$(function () {
+    var chart5 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'chadochange',
+            type: 'pie',
+            style: {
+                fontFamily: 'Arial'
+            },
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: 'Total genes: 10369'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 55,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}'
+                }
+            }
+        },
+        series: [{
+            name: 'V5.2 IDs',
+            colorByPoint: true,
+            data: [{
+                name: 'Directly transferred',
+                y: 7214,
+                drilldown: null
+              }, {
+                name: 'Added as PSID',
+                y: 1475,
+                drilldown: 'add2psid'
+              }, {
+                name: 'Delete/Create',
+                y: 1680,
+                sliced: true,
+                drilldown: 'deleted'
+            }]
+        }],
+        drilldown: {
+            series: [{
+                id: 'add2psid',
+                data: [
+                    ['Been merged', 622],
+                    ['Been split', 625],
+                    ['Multiple copies', 33],
+                    ['Consensus but similarity ＜ 85%', 195]
+                ]
+            }, {
+                id: 'deleted',
+                data: [
+                    ['RATT not transferred', 620],
+                    ['Mentioned in literature', 32],
+                    ['Structure-corrected', 123],
+                    ['Hypothetical proteins', 1099],
+                    ['Undefined product', 35],
+                    ['egg protein', 25],
+                    ['gag/pol polyprotein', 25],
+                    ['KRAB A domain containing protein', 15],
+                    ['MEG', 14],
+                    ['histone', 8],
+                    ['The rest products', 459]
+                ]
+            }]
+        }
+    });
+});
+</script>
+          </section>
+          <section>
+              <h4>Split gene models</h4>
+<script type="text/javascript">
+$(document).ready(function() {
+	$.get('asserts/SplitLengths_ed.csv', function(csv) {
+	    $('#seqsplit').highcharts({
+	        chart: {
+	        	type: 'scatter',
+	        	zoomType: 'x',
+	        	style: {
+	        	    fontFamily: 'Arial'
+	        	}
+	        },
+	        data: {
+	            csv: csv,
+	        },
+	        title: {
+				text: 'Sequence coverage of split genes'
+			},
+			legend: {
+			    enabled: false
+			},
+			plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 3,
+                        symbol: 'circle',
+                    },
+                    tooltip: {
+                        pointFormat: 'Coverage: <b>{point.y:.2f}%</b><br/>'
+                    }
+                }
+            },
+            credits: {enabled: false},
+			yAxis: {
+				title: {
+					text: 'Sequence Coverage (%)'
+				},
+				max: '100'
+			}
+	    });
+	});
+});
+</script>
+              <div id="seqsplit" style="width: 100%"></div>
+          </section>
+      </section>
+
+      <section>
+          <h3>Number of genes on each chromosome</h3>
+          <div id="chart7" style="width: 90%"></div>
+<script>
+$(function () {
+   var rabar = new Highcharts.Chart({
+     chart: {
+         renderTo: 'chart7',
+         type: 'column',
+         options3d: {
+             enabled: false
+         },
+         style: {
+             fontFamily: 'Arial'
+         }
+       },
+    xAxis: {
+        categories: ['1', '2', '3', '4', '5', '6', '7', 'ZW']
+    },
+    title: {
+        text: 'Gene number and id changes on each chromosme'
+    },
+    subtitle: {
+        text: ''
+    },
+    yAxis: {
+        allowDecimals: false,
+        min: 0,
+        title: {
+            text: 'Number of genes'
+        },
+        labels: {
+            format: '{value}'
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>Chr_' + this.x + '</b><br/>' +
+                this.series.name + ': ' + this.y + '<br/>' +
+                'Total: ' + this.point.stackTotal;
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal'
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'V5 IDs',
+        data: [1741, 890, 880, 842, 333, 504, 286, 1735],
+        color: '#2d89e5'
+    }, {
+        name: 'Seq Changed',
+        data: [81, 45, 6, 50, 24, 30, 20, 70],
+        color: '#ffd700'
+    }, {
+        name: 'Merged',
+        data: [54, 33, 31, 46, 19, 15, 13, 56],
+        color: '#990066'
+    }, {
+        name: 'Split',
+        data: [290, 170, 172, 170, 82, 95, 65, 288],
+        color: '#ff9966'
+    }, {
+        name: 'Novel',
+        data: [310, 206, 168, 138, 138, 134, 71, 379],
+        color: 'lightgreen'
+    }]
+  })
+});
+</script>
+      </section>
+
+      <section>
+        <h3>Functional assessment</h3>
+          <ul style="float: left">
+              <li>Alternatively spliced genes: 3052/10742 (<span style="color: red;">28.4%</span>); 6.3% in v5.2</li>
+              <li>Proteins with conserved domains: 11767/15947 (<span style="color: red;">73.8%</span>); 72% in v5.2</li>
+          </ul><br>
+          <div id="chart5" style="width: 80%;"></div>
+<script>
+$(function () {
+  var chart5 = new Highcharts.Chart({
+    chart: {
+      renderTo: 'chart5',
+      type: 'pie',
+      style: {
+        fontFamily: 'Arial'
+      }
+    },
+    title: {
+      text: 'Domain classifications (CDD)'
+    },
+    subtitle: {
+      text: ''
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor:'pointer',
+        dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y}'
+        }
+      }
+    },
+    series: [{
+      name:'CDD',
+      colorByPoint: true,
+      data:[{
+        name: 'WD40',
+        y: 262,
+        drilldown: null
+      }, {
+        name: 'ANK',
+        y: 138,
+        drilldown: null
+      }, {
+        name: 'MFS',
+        y: 105,
+        drilldown: null
+      }, {
+        name: 'PDZ_signaling',
+        y: 103,
+        drilldown: null
+      }, {
+        name: 'homeodomain',
+        y: 91,
+        drilldown: null
+      }, {
+        name: 'Ig',
+        y: 91,
+        drilldown: null
+      }, {
+        name: 'Efh',
+        y: 83,
+        drilldown: null
+      }, {
+        name: 'FN3',
+        y: 72,
+        drilldown: null
+      }, {
+        name: 'AAA',
+        y: 71,
+        drilldown: null
+      }, {
+        name: 'HELICc',
+        y: 54,
+        drilldown: null
+      }, {
+        name: 'Cadherin_repeat',
+        y: 55,
+        drilldown: null
+      }, {
+        name: 'CH',
+        y: 54,
+        drilldown: null
+      }, {
+        name: 'EGF_CA',
+        y: 52,
+        drilldown: null
+      }, {
+        name: 'DEADc',
+        y: 50,
+        drilldown: null
+      }, {
+        name: '...',
+        y: 728.3,
+        sliced: true,
+        drilldown: 'therest'
+      }]
+    }],
+   drilldown: {
+       series: [{
+         id: 'therest',
+         data: [
+           ['HLH',49],
+           ['7tmA_FMRFamide_R-like', 44],
+           ['FERM_B-lobe', 41],
+           ['DnaJ', 40],
+           ["RRM_SF", 26],
+           ['FH', 25],
+           ["LamG", 23],
+           ['7tm_classA_rhodopsin-like', 23],
+           ['CYCLIN', 20],
+           ['PTKc', 16],
+           ["SH2_Tensin_like", 16],
+           ["EGF_Lam", 13],
+           ["7tmA_NPYR-like", 8],
+           ['SOX-TCF_HMG-box',12],
+           ['...', 69.67]
+         ]
+       }]
+    }
+  });
+});
+</script>
+          <p>Product description: (v5 product + <a href="http://www.uniprot.org/uniprot/?query=*&fil=reviewed%3Ayes" target="_blank">SwissProt</a>  hit)</p>
+      </section>
+
+      <section>
+          <h3>Identify annotation errors</h3>
+<script type="text/javascript">
+$(document).ready(function() {
+	$.get('asserts/errlist.csv', function(csv) {
+	    $('#faerr').highcharts({
+	        chart: {
+	        	type: 'scatter',
+	        	zoomType: 'x',
+	        	style: {
+	        	    fontFamily: 'Arial'
+	        	}
+	        },
+	        data: {
+	            csv: csv,
+	            seriesMapping: [{x: 2, y: 1, name: 0}]
+	        },
+	        title: {
+				text: 'Prot sequences with internal stop codons'
+			},
+			subtitle: {
+			    text: 'Translation based on all frames'
+			},
+			legend: {
+			    enabled: false
+			},
+			plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 3,
+                        symbol: 'circle',
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return 'Chr: ' + this.point.name + '<br/>' +
+                        //'Chr: ' + this.x + '<br>' +
+                        'Stop Codons: ' + this.y;
+                }
+            },
+            credits: {enabled: false},
+			yAxis: {
+				title: {
+					text: 'Number of stop codons'
+				}
+			}
+	    });
+	});
+});
+</script>
+          <div id="faerr" style="width: 90%"></div>
+          <p>Other methods include Annotation Edit Distance (AED), BUSCO, etc. </p>
+      </section>
+
+      <section>
+	  <h3>Next Steps</h3>
+	  <ul>
+        <li>Create gene models in Augustus set (structurally correct, e.g., MEGs)</li>
+        <li>Curate gene models (e.g., split cases and errors in AA sequences)</li>
+        <li>Add previous systematic id (to Chado & to previous annotations; DONE)</li>
+        <li>Add GO terms and InterPro Scan data (chado / WB Parasite pipeline)</li>
+        <li>Annotate non-coding RNAs?</li>
+      </ul>
+      </section>
+
+      <section>
+          <h3>Meta-analysis of published RNAseq data on V7</h3>
+          <center><div id="chart6" style="width: 95%;"></div></center>
+<script>
+$(function () {
+  var chart6 = new Highcharts.Chart({
+    chart: {
+        type: 'spline',
+        renderTo: 'chart6',
+        zoomType: 'x',
+        style: {
+            fontFamily: 'Arial'
+        }
+    },
+
+    title: {
+        text: 'Expression changes throughout life stages'
+    },
+
+    subtitle: {
+        text: 'TMM normalisation across all'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Normalised expression'
+        }
+    },
+
+    xAxis: {
+        categories: ['Ovary', 'Egg', 'Miracidium', 'Sporocyst', 'Cercaria', 'Schistosomula' ,'Imature Female', 'Mature Female', 'Cultured Female']
+    },
+
+    legend: {
+        enabled: true,
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    tooltip: {
+         formatter: function () {
+            return this.series.name + ' in ' + this.x + ': ' + this.y;
+         }
+    },
+
+	credits:{enabled: false},
+
+    plotOptions: {
+        spline: {
+            marker: {enabled: true},
+            linewidth: 3
+        }
+    },
+
+    series: [{
+        name: 'CPEB1',
+        color: 'red',
+        data: [183.85,13.3830378338583,0.071552082766182,0.108833389519651,0.31812,0,0.0893065,12.4936,4.27694869364782]
+    }, {
+        name: 'ER_ret_rcpt',
+        color: 'purple',
+        visible: false,
+        data: [100.778,414.809321124421,59.5966123167095,65.4565236604215,65.5151,60.723,93.6435,97.2711,238.535845127712]
+    }, {
+        name: 'EIF4G',
+        color: 'black',
+        visible: false,
+        data: [152.686,146.576402923851,341.411501966,219.035786545859,212.333,148.475,117.893,135.492,97.1497278592115]
+    }, {
+        name: 'Cam4',
+        color: 'blue',
+        visible: false,
+        data: [5.65879,0,0,0,2959.76,716.54,39.8743,0.260355,0]
+    }]
+  });
+});
+</script>
+      </section>
+
+      <section>
+        <h3>Tools and Support</h3>
+        <ul style="float: left; margin-left: 60px;">
+            <li><a href="http://ratt.sourceforge.net/" target="_blank">RATT</a></li>
+            <li><a href="http://bioinf.uni-greifswald.de/augustus/" target="_blank">Augustus (v3.2.2)</a> </li>
+            <li><a href="http://ccb.jhu.edu/software/stringtie/gff.shtml" target="_blank">gffcompare (v0.9.9d)</a> </li>
+            <li><a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download" target="_blank">BLAST (v2.6.0+)</a></li>
+            <li><a href="http://www.repeatmasker.org/" target="_blank">RepeatMasker (v1.0.8)</a> </li>
+            <li><a href="http://www.sanger.ac.uk/science/tools/artemis" target="_blank">Artemis (v16.0.18)</a></li>
+            <li><a href="http://bedtools.readthedocs.io/en/latest/content/tools/intersect.html" target="_blank">intersectBed (v2.17.0)</a></li>
+            <li><a href="https://www.ncbi.nlm.nih.gov/Structure/bwrpsb/bwrpsb.cgi" target="_blank">NCBI CD-Search</a></li>
+        </ul>
+
+        <ul style="float: left; margin-left: 60px;">
+            <li><a href="https://github.com/ISUgenomics/common_scripts/blob/master/gff2fasta.pl">gff2fasta.pl</a> </li>
+            <li>embl_to_gff.pl (Avril)</li>
+            <li><a href="http://www.bioinformatics-made-simple.com/2012/07/ncbi-blast-parser-extract-query-and.html">ncbiblastparser.pl</a> </li>
+            <li>pair_replace.pl</li>
+        </ul>
+
+        <ul style="float: left; margin-left: 60px;">
+            <li>Alan</li>
+            <li>Avril</li>
+            <li>Steve</li>
+            <li>Thomas</li>
+        </ul><br><br><br><br>
+            <p style="float: right;"><em><small>Last update: 21/07/2017<br>
+                Slides powered by <a href="https://github.com/hakimel/reveal.js/" target="_blank">reveal.js</a> and <a href="https://www.highcharts.com" target="_blank">Highcharts.js</a></small></em>
+            </p>
+      </section>
+    </div>
+  </div>
+
+  <script src="asserts/reveal.js"></script>
+  <script>
+        Reveal.initialize({
+            progress: true,
+            rollingLinks: true,
+            history: true,
+            transition: 'fade' // default/cube/page/concave/linear(2d)/none/fade/convex/zoom
+        });
+    </script>
+
+</body>
+</html>
