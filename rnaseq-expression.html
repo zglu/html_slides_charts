@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Analysis and visualisation of RNAseq gene expression in all life stages of S. mansoni</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="static/webslides.css"/>
+<script src="static/jquery-3.2.1.min.js"></script>
+<script src='static/highcharts.js'></script>
+<script src="static/highcharts-3d.js"></script>
+<script src="static/data.js"></script>
+<script src="static/hc-flat.js"></script>
+</head>
+<body>
+<!-- start of slides -->
+<article id="webslides">
+<section class="aligncenter">
+<div class="wrap">
+<h1>Analysis and visualisation of RNAseq gene expression in all life stages of <em>S. mansoni</em></h1><br>
+<h4>Zhigang Lu</h4>
+<p>10/10/2017</p>
+</div>
+</section>
+
+<section class="">
+<div class="wrap">
+<h3>This is based on V5.2. Why?</h3>
+<ul>
+<li>Original analyses were on V5. Need to compare/validate the results.</li>
+<li>Kind of providing an archive for V5.2 (main findings might not change).</li>
+<li>V7 annotation is ongoing. A lot of identifier changes.</li>
+<li>Can facilitate V7 annotation, esp. concerning the functions and expression of previous models.</li>
+<li>New and deep analysis can be performed on V7 later, with better samples and replicates (e.g. eggs).</li>
+</ul>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="width: 80%">
+<h3 id="sample-information">Data information</h3>
+<small><table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Label</th>
+<th align="left">Sequence Source</th>
+<th align="left">Biological Replicates</th>
+<th align="left">Reference</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Gonad (testis)</td>
+<td align="left">bTe</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB14695">PRJEB14695</a></td>
+<td align="left">3</td>
+<td align="left"><a href="https://www.nature.com/articles/srep31150">Lu et al. (2016)</a></td>
+</tr>
+
+<tr>
+<td align="left">Gonad (ovary)</td>
+<td align="left">bOv</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB14695">PRJEB14695</a></td>
+<td align="left">3</td>
+<td align="left"><a href="https://www.nature.com/articles/srep31150">Lu et al. (2016)</a></td>
+</tr>
+
+<tr>
+<td align="left">Egg</td>
+<td align="left">Egg</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJNA294789">PRJNA294789</a></td>
+<td align="left">1</td>
+<td align="left"><a href="http://dx.doi.org/10.1371/journal.pntd.0004334">Anderson et al. (2015)</a></td>
+</tr>
+
+<tr>
+<td align="left">Miracidium</td>
+<td align="left">Mir</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJNA294789">PRJNA294789</a></td>
+<td align="left">1</td>
+<td align="left"><a href="http://dx.doi.org/10.7554/eLife.00768">Wang et al. (2013)</a></td>
+</tr>
+
+<tr>
+<td align="left">Sporocyst (48h)</td>
+<td align="left">Spo</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJNA294789">PRJNA294789</a></td>
+<td align="left">1</td>
+<td align="left"><a href="http://dx.doi.org/10.7554/eLife.00768">Wang et al. (2013)</a></td>
+</tr>
+
+<tr>
+<td align="left">Cercaria</td>
+<td align="left">Cer</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB2350">PRJEB2350</a></td>
+<td align="left">3</td>
+<td align="left"><a href="http://dx.doi.org/10.1371/journal.pntd.0001455">Protasio et al. (2012)</a></td>
+</tr>
+
+<tr>
+<td align="left">Schistosomulum (3h)</td>
+<td align="left">Som</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB2350">PRJEB2350</a></td>
+<td align="left">2</td>
+<td align="left"><a href="http://dx.doi.org/10.1371/journal.pntd.0001455">Protasio et al. (2012)</a></td>
+</tr>
+
+<tr>
+<td align="left">Adult male before pairing</td>
+<td align="left">sMa</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB14695">PRJEB14695</a></td>
+<td align="left">3</td>
+<td align="left"><a href="https://www.nature.com/articles/srep31150">Lu et al. (2016)</a></td>
+</tr>
+
+<tr>
+<td align="left">Adult female before pairing</td>
+<td align="left">sFe</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB14695">PRJEB14695</a></td>
+<td align="left">3</td>
+<td align="left"><a href="https://www.nature.com/articles/srep31150">Lu et al. (2016)</a></td>
+</tr>
+
+<tr>
+<td align="left">Adult male after pairing</td>
+<td align="left">bMa</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB14695">PRJEB14695</a></td>
+<td align="left">3</td>
+<td align="left"><a href="https://www.nature.com/articles/srep31150">Lu et al. (2016)</a></td>
+</tr>
+
+<tr>
+<td align="left">Adult female after pairing</td>
+<td align="left">bFe</td>
+<td align="left"><a href="http://www.ebi.ac.uk/ena/data/view/PRJEB14695">PRJEB14695</a></td>
+<td align="left">3</td>
+<td align="left"><a href="https://www.nature.com/articles/srep31150">Lu et al. (2016)</a></td>
+</tr>
+</tbody>
+</table></small>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Lirary size and expressed genes</h3><br>
+<pre id="mhb80" style="display:none;">
+Sample,Replicate_1,Replicate_2,Replicate_3
+bTe,78.21,78.12,78.57
+bOv,72.08,70.6,70.4
+Egg,57.94
+Mir,69.36
+Spo,66.66
+Cer,76.54,78.93,78.49
+Som,80.87,81.54
+sMa,81.77,81.59,82.25
+sFe,82.50,82.53,82.31
+bMa,83.15,82.93,82.19
+bFe,80.68,78.62,78.60
+</pre>
+<pre id="tc95i" style="display:none;">
+Sample,Replicate_1,Replicate_2,Replicate_3
+bTe,29.643786,24.625567,19.939503
+bOv,24.831879,63.472787,56.664560
+Egg,0.096691
+Mir,60.230741
+Spo,66.122608
+Cer,14.990523,32.609995,23.453370
+Som,20.887726,27.539735
+sMa,42.949245,42.841035,36.581319
+sFe,43.913097,75.421480,50.058027
+bMa,52.977773,40.595996,40.319774
+bFe,15.839979,29.547879,25.180870
+</pre>
+<center>
+<div id="5h88p9" style="width: 45%; display: inline-block"></div>&nbsp;&nbsp;
+<div id="5h88q9" style="width: 45%; display: inline-block"></div>
+</center>
+<script>
+$(function(){var t=$("#mhb80").html().replace(/[ 	]+/g,",");var options={chart:{type:"scatter",renderTo:"5h88q9",zoomType:"xy",style:{fontFamily:"Arial"}},yAxis:{title:{text:"Expressed genes (%; RPKM>1)"},labels:{format:"{value}"}},data:{csv:t,switchRowsAndColumns:!1},plotOptions:{scatter:{dataLabels:{enabled:true,format:"{point.y:.2f}"},marker:{fillColor:"#ff0000",radius:3,symbol:"circle"},cursor:"pointer",point:{events:{click:function(){var l="https://scholar.google.com/scholar?hl=en&q="+this.options.name;window.open(l)}}},turboThreshold:0}},title:{text:"Expressed genes (%)"},legend:{enabled:!1},credits:{enabled:!1},series:[{colorByPoint:false}],tooltip:{borderColor:"#666",formatter:function(){return this.series.name+"<br/>Expressed genes(%): "+Highcharts.numberFormat(this.y,2)}}};var chart = new Highcharts.Chart(options)});</script>
+
+<script>
+$(function(){var t=$("#tc95i").html().replace(/[ 	]+/g,",");var options={chart:{type:"scatter",renderTo:"5h88p9",zoomType:"xy",style:{fontFamily:"Arial"}},yAxis:{title:{text:"Reads in million"},labels:{format:"{value}"}},data:{csv:t,switchRowsAndColumns:!1},plotOptions:{scatter:{dataLabels:{enabled:true,format:"{point.y:.2f}"},marker:{fillColor:"#ff0000",radius:3,symbol:"circle"},cursor:"pointer",point:{events:{click:function(){var l="https://scholar.google.com/scholar?hl=en&q="+this.options.name;window.open(l)}}},turboThreshold:0}},title:{text:"Library size"},legend:{enabled:!1},credits:{enabled:!1},series:[{colorByPoint:false}],tooltip:{borderColor:"#666",formatter:function(){return this.series.name+"<br/>Reads (million): "+Highcharts.numberFormat(this.y,2)}}};var chart = new Highcharts.Chart(options)});</script>
+</div>
+</section>
+
+<section class="">
+<div class="wrap zoomIn" style="height: 100%">
+<h3>Principle Component Analysis</h3>
+<pre id="cpdzh" style="display:none;">
+sample,PC1,PC2
+bTe1,-69.5290916847483,-85.8839935569951
+bTe2,-75.6489734742915,-79.8139271355803
+bTe3,-70.1977633515945,-78.5793688781066
+bOv1,-106.519638484707,-30.1359311052808
+bOv2,-119.038937201579,-34.9843058251949
+bOv3,-115.874024808092,-31.8233179198764
+Egg,-26.7922778625456,44.8464878919477
+Mir,-85.0658506182743,93.056338665924
+Spo,-96.3344237979718,84.8856128320604
+Cer1,4.15401621837945,92.3856196999067
+Cer2,10.7685489860894,90.9586796800791
+Cer3,9.83649009593145,89.9851566680414
+Som1,17.7134721522613,88.4883432129263
+Som2,29.5790668969132,86.9683793202899
+sMa1,72.3068706546367,-24.0381078924463
+sMa2,71.3434959524958,-23.3475896105753
+sMa3,71.7891987660483,-23.155214350721
+sFe1,68.3038993251722,-26.4363626245668
+sFe2,67.817272162798,-26.8033933786855
+sFe3,68.3783153320821,-27.7785353894956
+bMa1,74.9410669823647,-23.1421808579743
+bMa2,76.3071569319498,-24.387856409283
+bMa3,71.4121827570334,-23.7018913105638
+bFe1,17.6368397204556,-36.1931471270262
+bFe2,15.3944472624164,-36.5751465120913
+bFe3,17.3186410867771,-34.794348086712
+
+</pre><br>
+<center><div id="9567q1" style="width: 60%"></div></center>
+<script>
+$(function(){var t=$("#cpdzh").html().replace(/[ 	]+/g,",");Highcharts.chart("9567q1",{chart:{type:"scatter",zoomType:"xy",style:{fontFamily:"Arial"}},xAxis:{title:{text:"PC1: 33% variance"},plotLines:[{color:"white",value:0,width:1,dashStyle:"dashdot",zIndex:5},{color:"white",value:0,width:1,dashStyle:"dashdot",zIndex:5}]},yAxis:{title:{text:"PC2: 25% variance"},labels:{format:"{value}"},plotLines:[{color:"white",value:0,width:1,dashStyle:"dashdot",zIndex:5},{color:"white",value:0,width:1,dashStyle:"dashdot",zIndex:5}]},data:{csv:t,seriesMapping:[{x:1,y:2,name:0}]},plotOptions:{scatter:{dataLabels:{enabled:true,format:"{point.name}"},marker:{fillColor:"#ff0000",radius:3,symbol:"circle"},cursor:"pointer",point:{events:{click:function(){var l="https://scholar.google.com/scholar?hl=en&q="+this.options.name;window.open(l)}}},turboThreshold:0}},title:{text:"PCA"},legend:{enabled:!1},credits:{enabled:!1},tooltip:{formatter:function(){return this.point.name+"<br/>PC1: "+Highcharts.numberFormat(this.x,2)+"<br>PC2: "+Highcharts.numberFormat(this.y,2)}}})});</script>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Principle Component Analysis (3D)</h3>
+<pre id="92ihx" style="display:none;">
+sample,PC1,PC2,PC3
+bTe1,-31.4534045435624,-160.626661959301,10.2426003304401
+bTe2,-9.32440754725288,-181.058717813969,13.7886983885638
+bTe3,-22.8512750816893,-168.655168798508,9.9695636614561
+bOv1,59.7935318197938,-147.887643997376,30.8070320720662
+bOv2,74.7006255717812,-163.3207731976,29.6578288733601
+bOv3,72.9336491138579,-156.208984003811,29.7628555084715
+Egg,504.314098335396,100.851235355056,-193.872808522173
+Mir,162.493425095799,18.1563057817875,66.2931572761216
+Spo,182.240261217124,-2.99548220961154,65.7061740178395
+Cer1,47.2772647390108,90.8862828015671,124.71081637565
+Cer2,24.2439528899625,93.655144770044,122.798827981993
+Cer3,26.4961459094444,91.235765693521,122.724492351484
+Som1,2.02890665100833,99.4727585054641,115.009144583415
+Som2,-10.0720294153155,120.215826787476,101.845268460025
+sMa1,-95.1079209608572,47.0078305162682,-56.1307852568672
+sMa2,-93.159269730872,47.4495123476252,-55.3437764785554
+sMa3,-96.9347789209929,47.8468107909285,-52.8688598793315
+sFe1,-104.030018904092,44.2399592716038,-54.7695268802684
+sFe2,-103.570363676098,42.1981839579949,-53.9104602225126
+sFe3,-108.046102402601,40.8896548836201,-52.7492323360667
+bMa1,-107.39369806468,49.9368487648856,-44.0158667513856
+bMa2,-108.061696343933,49.1995114687763,-54.2785670417624
+bMa3,-98.8700178365854,46.0789878969446,-55.0044170161571
+bFe1,-63.8010919391449,-19.6338437793651,-56.2152230170007
+bFe2,-52.1183535275135,-16.1277543263348,-56.7048454794012
+bFe3,-51.7274324479865,-12.8055895076873,-57.452090999403
+
+</pre><br>
+<center><div id="w1xk2a" style="width: 60%"></div></center>
+<script>
+$(function(){var t=$("#92ihx").html().replace(/[ 	]+/g,",");var chart=new Highcharts.chart({chart:{renderTo:"w1xk2a",type:"scatter",style:{fontFamily:"Arial"},options3d:{enabled:!0,alpha:10,beta:30,depth:250,viewDistance:5,fitToPlot:!1}},xAxis:{title:{text:"PC1"}},yAxis:{title:{text:"PC2"},labels:{format:"{value}"}},zAxis:{title:{text:"PC3"}},data:{csv:t,seriesMapping:[{x:1,y:2,z:3,name:0}]},plotOptions:{scatter:{dataLabels:{enabled:true,format:"{point.name}"},marker:{radius:3,fillColor:"",symbol:"circle"},cursor:"pointer",point:{events:{click:function(){var l="https://scholar.google.com/scholar?hl=en&q="+this.options.name;window.open(l)}}},turboThreshold:0}},title:{text:"PCA"},legend:{enabled:!1},credits:{enabled:!1},series:[{colorByPoint:true}],tooltip:{formatter:function(){return this.point.name+"<br/>PC1: "+Highcharts.numberFormat(this.point.x,2)+"<br>PC2: "+Highcharts.numberFormat(this.point.y,2)+"<br>PC3: "+Highcharts.numberFormat(this.point.z,2)}}});$(chart.container).on("mousedown.hc touchstart.hc",function(t){var e,o,a=(t=chart.pointer.normalize(t)).pageX,r=t.pageY,i=chart.options.chart.options3d.alpha,n=chart.options.chart.options3d.beta;$(document).on({"mousemove.hc touchdrag.hc":function(t){o=n+(a-t.pageX)/5,chart.options.chart.options3d.beta=o,e=i+(t.pageY-r)/5,chart.options.chart.options3d.alpha=e,chart.redraw(!1)},"mouseup touchend":function(){$(document).off(".hc")}})})});</script>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Stage(s)-preferential gene expression</h3><br>
+<div class="content-left"><img src="static/Fig_2.jpg" width="90%"></div>
+<div class="content-right"><img src="static/Fig_4.jpg" width="71%"></div>
+</center>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Differential expression between adjacent life stages</h3>
+<center><img class="aligncenter" src="static/Fig_3.jpg" width="50%">
+<small style="text-align: right"><em>FDR < 0.01; fold-difference > 2</em></small></center>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Correlations between meta-analysis and original analyses</h3>
+<img class="aligncenter" src="static/Fig_5.jpg" width="80%">
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Additional information about stage transitions</h3>
+<center>
+<div style="display: inline-block; width: 48%"><img class="aligncenter" src="static/Fig_3b.jpg" width="93%"></div>
+<div style="display: inline-block; width: 48%"><img class="aligncenter" src="static/Fig_6.jpg" width="94%"></div>
+</center>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>New housekeeping genes</h3><br>
+<pre id="6t0e3" style="display:none;">
+id,Egg,Mir,Spo,Cer,Som,sMa,sFe,bMa,bFe
+Smp_026090,32.0809955597968,22.3666721850217,21.7794793699946,35.1094726802324,37.6400671007103,28.4753937094645,30.96436045632,27.7848383697022,30.1348491563367
+Smp_031100,64.6075605023685,90.3248807179681,125.192901283155,98.9811424465797,104.142963373923,88.3217057163727,85.7686214358501,91.0018561220298,91.5906979977331
+Smp_035580,118.813903834077,94.8167803593509,95.4340806247823,92.1761514877479,80.625528115532,103.848297119153,85.9618038506462,106.251371729447,93.5151433538373
+Smp_054640,66.7714500885722,39.4350901992825,57.7233438574235,34.5329987438476,35.0530196429024,38.1834814370151,46.1882656028492,36.7240922201293,44.8529090350303
+Smp_058790,22.6545991371941,24.4751757552167,20.0803189185649,22.4743157309745,21.5239482694725,20.8310294214341,15.9625246201305,22.5108562318396,18.488842476831
+Smp_062610,93.0348871234106,133.881169395096,136.256830151421,151.70075194751,161.590726451185,142.130764517147,137.742805395124,118.09502720584,136.620294793978
+Smp_125800,51.2118644716022,37.7885935601498,28.8040458531739,33.3228902778625,23.8220764284068,29.8592828360527,30.4184196415553,29.9687838980454,35.5400575738836
+Smp_146800,132.654306734901,110.352332359452,148.997804636039,133.159206704781,129.424048057235,130.65467372387,119.233746709981,107.105743992243,137.334329124619
+Smp_150390,19.7479713233655,30.7792421565302,32.5737474816346,23.0620557217633,32.4395016120834,29.5176118615589,23.6019963725161,25.9487473368205,25.7004076725767
+Smp_151720,12.6558945603189,12.7249605430702,14.0877265737644,15.0413147747841,21.6401385758586,16.2383729965858,12.6175150367887,15.7264166600471,16.3709154581371
+Smp_153590,20.6963202287248,27.0699315631912,25.822600769303,25.6575841033738,24.7822810154032,22.0418449674158,21.0719481082835,21.9543136215736,28.8434599066923
+Smp_166980,71.786178335965,89.6743580767705,54.0238529558969,74.1323064404163,77.2658647322492,56.5160795943728,53.4689695477447,47.935423234693,61.5861646649276
+Smp_190770,46.2706666727838,43.0572658679395,33.8290729859383,41.6007344320582,32.1986237561928,42.4124364849787,41.3021902009162,32.7025470280622,35.4917179181811
+</pre>
+<center><div>
+<div style="width: 43%; display: inline-block;"><img src="static/housekeeping.png"></div>&nbsp;&nbsp;
+<div id="wzgzmp" style="width: 45%; display: inline-block;"></div>
+</div></center>
+<script>
+$(function(){var t=$("#6t0e3").html().replace(/[ 	]+/g,",");Highcharts.chart("wzgzmp",{chart:{type:"line",zoomType:"xy",style:{fontFamily:"Arial"}},xAxis:{title:{text:""}},yAxis:{title:{text:"Normalised expression"},labels:{format:"{value}"}},data:{csv:t,switchRowsAndColumns:true},plotOptions:{spline:{dataLabels:{enabled:false,format:"{point.y:.2f}"},cursor:"pointer",point:{events:{click:function(){var l="https://scholar.google.com/scholar?hl=en&q="+this.series.name;window.open(l)}}}}},title:{text:"Housekeeping genes"},legend:{enabled:!0},credits:{enabled:!1},tooltip:{formatter:function(){return this.series.name+"<br/>Normalised expression: "+Highcharts.numberFormat(this.y,2)}}})});</script>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Abundantly expressed genes in all life stages</h3><br>
+<pre id="mr0nd" style="display:none;">
+id,Egg,Mir,Spo,Cer,Som,sMa,sFe,bMa,bFe
+Smp_009580,999.067821950262,5834.1378547007,7573.5065128386,2096.60817159375,25419.4882619533,25304.4743283751,19987.9989427221,19977.587467812,11801.7999582647
+Smp_106930,27888.5927309597,67110.3670224948,26655.4215442971,3622.55391000704,42237.168252872,3894.54683992016,3654.0485656508,3174.26688050366,1888.85931539645
+Smp_200280,62075.2592895074,7089.11725624896,5588.3150089035,38123.4838141605,14322.0474105533,492.72291672414,493.250762286326,575.732556464089,439.098135636148
+Smp_042160,2281.14386696824,7036.45990288418,2779.84762863394,28025.9218241717,7799.24100106283,10352.4826305641,6456.0772831365,7271.76926090379,2045.34893194376
+Smp_056970,4788.88304591613,6108.28568372219,6164.99515407188,18687.5987770083,6856.4747729472,7731.84180584875,5844.9962983105,5403.71394594486,3587.25593846644
+Smp_054160,1596.29434863871,4786.09629768879,4246.20074487491,5315.50415627845,1102.31337505333,15297.6205845465,6808.86978583973,10761.8060037494,4067.56876042369
+Smp_900020,790.79654054899,189.83250895711,2015.35801075876,5398.9399554771,352.649297658855,14385.7648838435,9543.55031602013,8828.9227901375,5289.3939845653
+Smp_182890,63186.1941713164,6885.58850438324,19427.9785650771,8557.36007369486,2656.38823713014,697.519436034894,507.132506778601,671.358466415785,738.37410177291
+Smp_099870,12450.4037515745,28615.2040459607,35286.3442090033,2574.54807387612,2401.91569492431,3619.637241554,4260.32701600748,2738.51422934818,6035.98246267817
+Smp_900050,5543.76919719755,184.023407575529,1032.33782886156,9163.38121016335,705.323880560191,8958.95841186461,4885.98065799738,5077.03402949682,2994.71053929729
+Smp_179300,1351.68487836369,14496.2155291801,13985.7850975749,7434.55719118353,3942.44781212708,3567.82681736966,4199.97589106608,3297.32593826356,4424.91585410638
+Smp_136220,26568.6168035125,1008.20654245325,1487.47348218441,12789.6024608948,8172.1178186402,1280.70806663503,769.093759605965,1549.39792297566,587.447115189068
+Smp_111340,38541.9021402305,598.076717736949,1166.2261379429,7138.18755568495,4301.59840813831,1982.5247054544,1215.34814436884,2785.20540324137,1706.2570741609
+Smp_067800,1037.21326860559,17446.1963344626,8319.24835865601,1542.91390065364,3207.25312162051,4347.11421405071,3875.81300102243,3377.52192876454,5894.47046272434
+Smp_090120,27956.7777511886,1327.83994194792,4160.01735009028,874.140639357988,2164.15927602544,2953.88768995121,2588.57108945845,2027.91279440345,1351.39800122422
+Smp_072330,4951.38666323583,21032.6099783994,17355.0390048568,377.114336665948,5059.98066393886,2659.69904828884,1969.5280253708,1236.71877799578,1508.53179474827
+Smp_003770,3003.25247737299,4843.66453266854,1644.9214719189,13045.2391682749,1666.72614884295,1345.29617911938,1865.25992862302,1240.53059301803,1277.87119833655
+Smp_017430,7009.4777969693,2148.64893194592,4781.64645614415,3542.11469897865,3562.3399372157,3139.29825841323,2500.88993007956,3124.33426076434,1765.88921956048
+Smp_040130,538.396337519738,3860.0716243632,7713.96180655669,512.913057205632,595.246940114938,4237.62434138354,4537.40943224947,2881.92810216169,4228.76943587902
+Smp_155060,5605.56257150434,13135.0310838182,14210.6898565719,3116.60632491965,1651.11338262016,1948.75257831758,2670.4511899462,1708.0495917529,2491.54697527192
+
+</pre>
+<center><div>
+<div style="width: 29.3%; display: inline-block;"><img src="static/abundant.png"></div>&nbsp;&nbsp;
+<div id="0z2e1z" style="width: 45%; display: inline-block"></div>
+</div></center>
+<script>
+$(function(){var t=$("#mr0nd").html().replace(/[ 	]+/g,",");Highcharts.chart("0z2e1z",{chart:{type:"line",zoomType:"xy",style:{fontFamily:"Arial"}},xAxis:{title:{text:""}},yAxis:{title:{text:"Expression"},labels:{format:"{value}"}},data:{csv:t,switchRowsAndColumns:true},plotOptions:{spline:{dataLabels:{enabled:false,format:"{point.y:.2f}"},cursor:"pointer",point:{events:{click:function(){var l="https://scholar.google.com/scholar?hl=en&q="+this.series.name;window.open(l)}}}}},title:{text:"Top 20 abundantly expressed genes"},legend:{enabled:!0},credits:{enabled:!1},tooltip:{formatter:function(){return this.series.name+"<br/>Expression: "+Highcharts.numberFormat(this.y,2)}}})});</script>
+</div>
+</section>
+
+<section class="">
+<div class="wrap" style="height: 100%">
+<h3>Data integration and access</h3>
+<img class="aligncenter" src="static/Fig_1.jpg" width="45%">
+</div>
+</section>
+
+<section class="aligncenter">
+<div class="wrap" style="height: 100%">
+<h2>DEMO: <a href="http://localhost:8000/" target="_blank">Web portal for gene expression data</a></h2>
+</div>
+</section>
+
+<section class="aligncenter">
+<div class="wrap" style="height: 100%">
+<h2>Little DEMO: <a href="https://ipres.xyz" target="_blank">Presentation with interactive charts</a></h2>
+<center><img class="aligncenter" src="static/htmlpres.png" width="50%">
+<p>Presentation framwork (HTML/CSS/JavaScript): RevealJS, DeckJS, Webslides, etc. <br>
+Interactive charts (JavaScript): ChartJS, Plotly, HighCharts, AnyChart, ECharts, etc.</p></center>
+</div>
+</section>
+
+<section class="aligncenter">
+<div class="wrap zoomIn" style="height: 100%">
+<h2>Questions?</h2>
+</div>
+</section>
+
+</article>
+<!-- end of slides -->
+<script src="static/webslides.min.js"></script>
+
+<script>
+  window.ws = new WebSlides();
+</script>
+</body>
+</html>
+
